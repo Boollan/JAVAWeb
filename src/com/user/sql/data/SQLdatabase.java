@@ -1,20 +1,13 @@
 package com.user.sql.data;
 
 
-
 import com.user.sql.datainteface.interfaceSqldata;
+import com.user.sql.encryption;
+import org.json.simple.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
-import java.util.SortedMap;
-
-import com.user.sql.SQLConfig;
-import com.user.sql.encryption;
-import org.json.simple.JSONObject;
 
 public class SQLdatabase implements interfaceSqldata {
 
@@ -42,6 +35,7 @@ public class SQLdatabase implements interfaceSqldata {
                 String password = resultSet.getString("password");
                 if (username != null) {
                     if (Password_encryption.equals(password) == true) {
+
                         return true;
 
                     } else {
@@ -263,84 +257,84 @@ public class SQLdatabase implements interfaceSqldata {
     public ResultSet Admin_Select_Record_Resultset(String UserName, java.util.Date StartTiem, java.util.Date EndTime, String platform, Connection mysqlcon) {
 
         try {
-            String StartTiem_stamp =null;
+            String StartTiem_stamp = null;
             String EndTime_stamp = null;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            if (StartTiem!=null){
+            if (StartTiem != null) {
                 long time = StartTiem.getTime();
                 StartTiem_stamp = sdf.format(time);
             }
-            if (EndTime!=null){
+            if (EndTime != null) {
                 long time = EndTime.getTime();
                 EndTime_stamp = sdf.format(time);
             }
 
 
             //全都知道
-            if (UserName != null&& StartTiem != null&&EndTime!=null) {
+            if (UserName != null && StartTiem != null && EndTime != null) {
 
 
                 Statement stm = mysqlcon.createStatement();
-                ResultSet sqldata = stm.executeQuery("Select * from login_record where username='"+UserName+"' and  "+EndTime_stamp+"<datetime and datetime>"+StartTiem_stamp+" and client='"+platform+"'");
+                ResultSet sqldata = stm.executeQuery("Select * from login_record where username='" + UserName + "' and  " + EndTime_stamp + "<datetime and datetime>" + StartTiem_stamp + " and client='" + platform + "'");
                 return sqldata;
             } else {
                 //全都不知道
-                if (UserName==null||UserName==""&&StartTiem==null&&EndTime==null){
+                if (UserName == null || UserName == "" && StartTiem == null && EndTime == null) {
 
 
                     Statement stm = mysqlcon.createStatement();
-                    ResultSet sqldata = stm.executeQuery("Select * from login_record where client='"+platform+"'");
+                    ResultSet sqldata = stm.executeQuery("Select * from login_record where client='" + platform + "'");
                     return sqldata;
-                }else {
+                } else {
 
                     //知道用户名 不知道时间范围
-                    if (UserName!=null&&StartTiem==null&&EndTime==null){
+                    if (UserName != null && StartTiem == null && EndTime == null) {
 
 
                         Statement stm = mysqlcon.createStatement();
-                        ResultSet sqldata = stm.executeQuery("Select * from login_record where username='"+UserName+"' and client='"+platform+"'");
+                        ResultSet sqldata = stm.executeQuery("Select * from login_record where username='" + UserName + "' and client='" + platform + "'");
                         return sqldata;
-                    }else {
+                    } else {
                         //不知道用户名知道时间
-                        if (UserName==null&&StartTiem!=null&&EndTime!=null){
+                        if (UserName == null && StartTiem != null && EndTime != null) {
 
                             Statement stm = mysqlcon.createStatement();
-                            ResultSet sqldata = stm.executeQuery("Select * from login_record where "+EndTime_stamp+"<datetime and datetime>"+StartTiem_stamp+" and client='"+platform+"'");
+                            ResultSet sqldata = stm.executeQuery("Select * from login_record where " + EndTime_stamp + "<datetime and datetime>" + StartTiem_stamp + " and client='" + platform + "'");
                             return sqldata;
-                        }else {
+                        } else {
                             //不知道用户名 不知道开始时间 知道结束时间
-                            if (UserName==null&&StartTiem==null&&EndTime!=null){
+                            if (UserName == null && StartTiem == null && EndTime != null) {
 
 
                                 Statement stm = mysqlcon.createStatement();
-                                ResultSet sqldata = stm.executeQuery("Select * from login_record where "+EndTime_stamp+"<datetime and client='"+platform+"'");
+                                ResultSet sqldata = stm.executeQuery("Select * from login_record where " + EndTime_stamp + "<datetime and client='" + platform + "'");
                                 return sqldata;
-                            }else {
+                            } else {
 
                                 //不知道用户名 知道开始时间 不知道结束时间
 
-                                if (UserName==null&&StartTiem!=null&&EndTime==null){
+                                if (UserName == null && StartTiem != null && EndTime == null) {
 
 
                                     Statement stm = mysqlcon.createStatement();
-                                    ResultSet sqldata = stm.executeQuery("Select * from login_record where datetime>"+StartTiem_stamp+" and client='"+platform+"'");
+                                    ResultSet sqldata = stm.executeQuery("Select * from login_record where datetime>" + StartTiem_stamp + " and client='" + platform + "'");
                                     return sqldata;
-                                }else {
+                                } else {
                                     //知道用户名 知道开始时间 不知道结束时间
-                                    if (UserName!=null&&StartTiem!=null&&EndTime==null){
+                                    if (UserName != null && StartTiem != null && EndTime == null) {
 
                                         Statement stm = mysqlcon.createStatement();
-                                        ResultSet sqldata = stm.executeQuery("Select * from login_record where username='"+UserName+"' and datetime>"+StartTiem_stamp+" and client='"+platform+"'");
+                                        ResultSet sqldata = stm.executeQuery("Select * from login_record where username='" + UserName + "' and datetime>" + StartTiem_stamp + " and client='" + platform + "'");
                                         return sqldata;
-                                    }else {
+                                    } else {
                                         //知道用户名 不知道开始时间 知道结束时间
-                                        if (UserName!=null&&StartTiem==null&&EndTime!=null){
+                                        if (UserName != null && StartTiem == null && EndTime != null) {
 
 
                                             Statement stm = mysqlcon.createStatement();
-                                            ResultSet sqldata = stm.executeQuery("Select * from login_record where username='"+UserName+"' and "+EndTime_stamp+"<datetime and client='"+platform+"'");
+                                            ResultSet sqldata = stm.executeQuery("Select * from login_record where username='" + UserName + "' and " + EndTime_stamp + "<datetime and client='" + platform + "'");
                                             return sqldata;
-                                        }else {
+                                        } else {
 
                                             return null;
                                         }
@@ -368,13 +362,13 @@ public class SQLdatabase implements interfaceSqldata {
 
     }
 
-    public boolean Admin_inset_cdk(String cdk, String money, Date overduetime, Connection mysqlcon){
+    public boolean Admin_inset_cdk(String cdk, String money, Date overduetime, Connection mysqlcon) {
 
         try {
             Statement stm = mysqlcon.createStatement();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = sdf.format(overduetime);
-            int is = stm.executeUpdate("INSERT INTO accout_cdk(cdk,money,effective,overduetime)VALUES('"+cdk.trim()+"','"+money.trim()+"',0,'"+format+"')");
+            int is = stm.executeUpdate("INSERT INTO accout_cdk(cdk,money,effective,overduetime)VALUES('" + cdk.trim() + "','" + money.trim() + "',0,'" + format + "')");
             if (is == 1) {
                 return true;
             } else {
@@ -386,42 +380,39 @@ public class SQLdatabase implements interfaceSqldata {
         }
     }
 
-    public boolean Acoout_send_Cdk(String username,String key,Connection mysqlcon){
+    public boolean Acoout_send_Cdk(String username, String key, Connection mysqlcon) {
 
         try {
             Statement stm = mysqlcon.createStatement();
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = sdf.format(date);
-            ResultSet resultSet = stm.executeQuery("select * from accout_cdk where cdk='"+key.trim()+"' and overduetime<'"+format+"' and effective=0");
+            ResultSet resultSet = stm.executeQuery("select * from accout_cdk where cdk='" + key.trim() + "' and overduetime<'" + format + "' and effective=0");
             if (resultSet.next()) {
                 double permissions = resultSet.getDouble("money");
-                ResultSet resultSet_user = stm.executeQuery("select * from accout_user where username='"+username.trim()+"'");
-                if (resultSet_user.next()){
-                    double donations =(double)resultSet_user.getInt("donations");
-                    int peace= (int)(donations+permissions);
-                    if (peace>4){
+                ResultSet resultSet_user = stm.executeQuery("select * from accout_user where username='" + username.trim() + "'");
+                if (resultSet_user.next()) {
+                    double donations = (double) resultSet_user.getInt("donations");
+                    int peace = (int) (donations + permissions);
+                    if (peace > 4) {
 
-                        int i = stm.executeUpdate("UPDATE accout_user set donations="+peace+",permissions=2 where username='"+username.trim()+"'");
-                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='"+key.trim()+"'");
-                        if (i>0){
+                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + ",permissions=2 where username='" + username.trim() + "'");
+                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key.trim() + "'");
+                        if (i > 0) {
                             return true;
-                        }
-                        else {
+                        } else {
                             return false;
                         }
-                    }else {
-                        int i = stm.executeUpdate("UPDATE accout_user set donations="+peace+",permissions=2 where username='"+username.trim()+"'");
-                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='"+key.trim()+"'");
-                        if (i>0){
+                    } else {
+                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + ",permissions=2 where username='" + username.trim() + "'");
+                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key.trim() + "'");
+                        if (i > 0) {
                             return true;
-                        }
-                        else {
+                        } else {
                             return false;
                         }
                     }
                 }
-
 
 
             } else {
@@ -436,7 +427,7 @@ public class SQLdatabase implements interfaceSqldata {
 
 
     //读取首页内容
-    public JSONObject Get_Home_Show_Text(Connection mysqlcon){
+    public JSONObject Get_Home_Show_Text(Connection mysqlcon) {
 
         try {
             Statement stm = mysqlcon.createStatement();
@@ -450,12 +441,12 @@ public class SQLdatabase implements interfaceSqldata {
                 Date updata_time = resultSet.getDate("updata_time");//更新时间
 
                 JSONObject json = new JSONObject();
-                json.put("homeTite",homeTite);
-                json.put("HomeText",HomeText);
-                json.put("imge_1",imge_1);
-                json.put("imge_2",imge_2);
-                json.put("imge_3",imge_3);
-                json.put("updata_time",updata_time);
+                json.put("homeTite", homeTite);
+                json.put("HomeText", HomeText);
+                json.put("imge_1", imge_1);
+                json.put("imge_2", imge_2);
+                json.put("imge_3", imge_3);
+                json.put("updata_time", updata_time);
 
                 return json;
             } else {
@@ -469,17 +460,17 @@ public class SQLdatabase implements interfaceSqldata {
     }
 
     //写入首页内容
-    public boolean Set_Home_Show_Text(String Title , String Text, String imge_1,String imge_2,String imge_3,Connection mysqlcon){
+    public boolean Set_Home_Show_Text(String Title, String Text, String imge_1, String imge_2, String imge_3, Connection mysqlcon) {
 
         try {
             Statement stm = mysqlcon.createStatement();
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = sdf.format(date);
-            int i = stm.executeUpdate("update Home_Show set HomeTite="+Title+" and HomeText="+Text+" and imge_1="+imge_1+" and imge_2="+imge_2+" and imge_3="+imge_3+" and updata_time="+format+" where id=1");
-            if (i>0){
+            int i = stm.executeUpdate("update Home_Show set HomeTite=" + Title + " and HomeText=" + Text + " and imge_1=" + imge_1 + " and imge_2=" + imge_2 + " and imge_3=" + imge_3 + " and updata_time=" + format + " where id=1");
+            if (i > 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (SQLException e) {

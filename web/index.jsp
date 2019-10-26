@@ -30,7 +30,6 @@
     <link href="bootstrap-3.3.7-dist/css/cover.css" rel="stylesheet">
 
 
-
 </head>
 
 <body style="background-image: url(/bootstrap-3.3.7-dist/imges/bg_bg.jpg);" ondragstart="return false">
@@ -43,7 +42,8 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h3 class="masthead-brand"><img src="/bootstrap-3.3.7-dist/imges/logo.png" alt="Norway" style="max-width: 100%;height: auto; "></h3>
+                    <h3 class="masthead-brand"><img src="/bootstrap-3.3.7-dist/imges/logo.png" alt="Norway"
+                                                    style="max-width: 100%;height: auto; "></h3>
                     <nav>
                         <ul class="nav masthead-nav">
                             <li class="active"><a href="#">首页</a></li>
@@ -53,9 +53,9 @@
 
                             <%
                                 Object userName = session.getAttribute("UserName");
-                                if(userName!=null){
-                                    out.print("<li><a href=\"accout/index.jsp\">"+"账号:"+userName+"</a></li>");
-                                }else {
+                                if (userName != null) {
+                                    out.print("<li><a href=\"accout/index.jsp\">" + "账号:" + userName + "</a></li>");
+                                } else {
                                     out.print("<li><a href=\"accout/login.jsp\">登录</a></li>");
                                 }
                             %>
@@ -95,22 +95,23 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" style="color: #2a2730;"><h3 id="Title_text"></h3></div>
                     <div class="panel-body" id="text" style="color:#2a2730;" align="left">
-<%--                        <p>1.汉化人员：Boollan |如需联合汉化请联系我 mail：golezaoz@gmail.com  | 原版优化：NFL BL游戏发布组自制兼容版</p>--%>
-<%--                        <p>2.此版本暂时汉化中</p>--%>
-<%--                        <p>=============</p>--%>
-<%--                        <p>3.汉化版本：0.1.0版本</p>--%>
-<%--                        <p>4.游戏必须放置在纯英文或数字路径 否则报错</p>--%>
-<%--                        <p>5.如游戏中遇到报错 请保持当前进度存档重启游戏即可。</p>--%>
-<%--                        <p>6.如翻译文本出错，可能会在下个版本修复（但汉化可能不够及时）</p>--%>
-<%--                        <p>======================================</p>--%>
-<%--                        <p>开场基本汉化完毕。</p>--%>
+                        <%--                        <p>1.汉化人员：Boollan |如需联合汉化请联系我 mail：golezaoz@gmail.com  | 原版优化：NFL BL游戏发布组自制兼容版</p>--%>
+                        <%--                        <p>2.此版本暂时汉化中</p>--%>
+                        <%--                        <p>=============</p>--%>
+                        <%--                        <p>3.汉化版本：0.1.0版本</p>--%>
+                        <%--                        <p>4.游戏必须放置在纯英文或数字路径 否则报错</p>--%>
+                        <%--                        <p>5.如游戏中遇到报错 请保持当前进度存档重启游戏即可。</p>--%>
+                        <%--                        <p>6.如翻译文本出错，可能会在下个版本修复（但汉化可能不够及时）</p>--%>
+                        <%--                        <p>======================================</p>--%>
+                        <%--                        <p>开场基本汉化完毕。</p>--%>
                     </div>
                 </div>
             </div>
 
             <div class="mastfoot">
                 <div class="inner">
-                    <p>® Registered: <a href="https://blogs.boollan.pro/">依梦汉化组</a>，by<a href="http://getbootstrap.com">Bootstrap</a>.</p>
+                    <p>® Registered: <a href="https://blogs.boollan.pro/">依梦汉化组</a>，by<a href="http://getbootstrap.com">Bootstrap</a>.
+                    </p>
                 </div>
             </div>
 
@@ -134,7 +135,6 @@
         var imge_3 = document.getElementById("imge_3");
 
 
-
         var xmlhttp = creatXMLHttpRequest();
 
         xmlhttp.open("GET", "/HomeShowText", false);
@@ -150,11 +150,11 @@
 
             var json = eval("(" + text + ")");//将字符串转换为JSON对象
 
-            Title_text.innerHTML=json.homeTite;
-            text_text.innerHTML=json.HomeText;
-            imge_1.src=json.imge_1;
-            imge_2.src=json.imge_2;
-            imge_3.src=json.imge_3;
+            Title_text.innerHTML = json.homeTite;
+            text_text.innerHTML = json.HomeText;
+            imge_1.src = json.imge_1;
+            imge_2.src = json.imge_2;
+            imge_3.src = json.imge_3;
 
         }
     }
@@ -162,7 +162,8 @@
 
 <script src="js/ajax.js"></script>
 
-<!--[if lt IE 9]><script src="bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!--[if lt IE 9]>
+<script src="bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

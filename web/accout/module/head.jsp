@@ -27,7 +27,8 @@
     <link href="/bootstrap-3.3.7-dist/css/jumbotron-narrow.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -48,26 +49,27 @@
                 <li role="presentation"><a href="#">邮箱更改</a></li>
                 <li role="presentation"><a href="#">捐助金额</a></li>
                 <li role="presentation"><a href="#">名称更改</a></li>
-                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li></ul>
+                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li>
+            </ul>
             <form id="formid" name="formid" action="/exit" method="post"></form>
         </nav>
         <%
             Cookie[] cookies = request.getCookies();
-            String getName=null;
-            String getvale=null;
-            if(cookies != null){
-                for(int i=0;i <cookies.length;i++){
+            String getName = null;
+            String getvale = null;
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
                     Cookie c = cookies[i];
-                    if ("UserName".equals(c.getName())==true){
+                    if ("UserName".equals(c.getName()) == true) {
                         getName = c.getName();
-                        getvale=c.getValue();
+                        getvale = c.getValue();
                     }
                 }
 
-                if("UserName".equals(getName)){
-                    out.print("<h3 class=\"text-muted\">"+"账号:"+getvale+"</h3>");
+                if ("UserName".equals(getName)) {
+                    out.print("<h3 class=\"text-muted\">" + "账号:" + getvale + "</h3>");
 
-                }else {
+                } else {
 
                     response.sendRedirect("/");
                 }
@@ -75,7 +77,7 @@
         %>
     </div>
 
-<%--    <%@ include file="" %>--%>
+    <%--    <%@ include file="" %>--%>
 
 
     <footer class="footer">
@@ -83,7 +85,9 @@
     </footer>
 </div> <!-- /container -->
 
-<script type="text/javascript">function is_exit(){document.getElementById("formid").submit(); }</script>
+<script type="text/javascript">function is_exit() {
+    document.getElementById("formid").submit();
+}</script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>
