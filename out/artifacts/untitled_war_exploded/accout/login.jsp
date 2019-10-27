@@ -9,9 +9,9 @@
 
 <%
     Object userName = session.getAttribute("UserName");
-    if(userName==null){
+    if (userName == null) {
 
-    }else {
+    } else {
         response.sendRedirect("/");
     }
 %>
@@ -39,7 +39,8 @@
     <link href="./accout/signin.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="../bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -57,25 +58,40 @@
     <form class="form-signin" style="margin : 0% 20% 0% 20%;" id="accfrom" method="post" action="/login_mysql">
         <h2 class="form-signin-heading" align="center">账号登录</h2>
         <label for="inputUsername" class="sr-only">Email address</label>
-        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required autofocus>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required
+               autofocus>
         <br>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required>
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="keep" name="inputKeep" onclick="is_check()" value="0" > 记住账号(7天免登录)
+                <input type="checkbox" id="keep" name="inputKeep" onclick="is_check()" value="0"> 记住账号(7天免登录)
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
         <p></p>
-        <a href="/accout/reg.jsp"><button class="btn btn-lg btn-primary btn-block" type="button">注册界面</button></a>
+        <a href="/accout/reg.jsp">
+            <button class="btn btn-lg btn-primary btn-block" type="button">注册界面</button>
+        </a>
         <p></p>
-        <a href="/"><button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button></a>
+        <a href="/">
+            <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
+        </a>
     </form>
 
 
 </div> <!-- /container -->
-<script type="text/javascript">var chek = document.getElementById("keep");chek.value="0";function is_check(){var statue = document.getElementById("keep");if (statue.checked==true){statue.value="1";}else {statue.value="0";}}</script>
+<script type="text/javascript">var chek = document.getElementById("keep");
+chek.value = "0";
+
+function is_check() {
+    var statue = document.getElementById("keep");
+    if (statue.checked == true) {
+        statue.value = "1";
+    } else {
+        statue.value = "0";
+    }
+}</script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>

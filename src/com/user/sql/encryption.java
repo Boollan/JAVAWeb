@@ -1,8 +1,11 @@
 package com.user.sql;
 
+import com.sun.org.apache.bcel.internal.generic.RET;
+
 import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 public class encryption {
 
@@ -78,4 +81,48 @@ public class encryption {
         return ip;
 
     }
+
+
+
+    //Base64 自定义加密函数处理
+    private static int SaltValueNum = 0; //加密次数
+    private static String GetSaltvalue="null";//盐值
+
+
+    /**
+     * @param src 要加密的字符串
+     * @return 加密后的字符串
+     */
+    public static String GetBase64Encoder(String src){
+
+        try {
+            src+="{"+GetSaltvalue+"}";
+            for (int x =0; x<SaltValueNum;x++){
+                src= new String(Base64.getEncoder().encode(src.getBytes()));
+            }
+            return src;
+        }catch (Exception e){
+            throw new Error(e);
+        }
+
+    }
+
+    /**
+     * @param src 已加密的字符串
+     * @return 解密后的字符串
+     */
+    public static String GetBase64Decoder(String src){
+
+        try {
+            for (int x =0; x<SaltValueNum;x++){
+                src= new String(Base64.getDecoder().decode(src.getBytes()));
+            }
+            src = src.substring(0,src.length()-9);
+            return src;
+        }catch (Exception e){
+            throw new Error(e);
+        }
+
+    }
+
 }

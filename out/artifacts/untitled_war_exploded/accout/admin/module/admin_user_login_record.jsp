@@ -71,7 +71,8 @@
         <div class="panel-heading">
             <ul class="nav nav-pills" role="tablist">
                 <li role="presentation" class="active"><a href="#">网页登陆记录</a></li>
-                <li role="presentation"><a href="/accout/admin/module/record_module/admin_user_login_game.jsp">游戏登录记录</a></li>
+                <li role="presentation"><a
+                        href="/accout/admin/module/record_module/admin_user_login_game.jsp">游戏登录记录</a></li>
             </ul>
         </div>
         <div class="panel-body">
@@ -133,7 +134,7 @@
     </footer>
 </div> <!-- /container -->
 
-    <script src="../../../js/ajax.js"></script>
+<script src="../../../js/ajax.js"></script>
 
 <script type="text/javascript">
     window.onload = function () {
@@ -188,7 +189,7 @@
 
                 for (var i in result) {
 
-                    wrap.insertAdjacentHTML('afterend', "<tr><th scope=\"row\">"+(result.length-i)+"</th><td>"+result[i].username+"</td><td>"+result[i].addip+"</td><td>"+result[i].datetime+"</td><td>"+result[i].client+"</td></tr>");
+                    wrap.insertAdjacentHTML('afterend', "<tr><th scope=\"row\">" + (result.length - i) + "</th><td>" + result[i].username + "</td><td>" + result[i].addip + "</td><td>" + result[i].datetime + "</td><td>" + result[i].client + "</td></tr>");
 
                 }
             }

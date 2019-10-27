@@ -14,7 +14,7 @@
 
 <div>
     <%
-       out.print("消息:"+request.getAttribute("errorMessage"));
+        out.print("消息:" + request.getAttribute("errorMessage"));
         response.setHeader("Refresh", "1;url=/index.jsp");
     %>
 </div>

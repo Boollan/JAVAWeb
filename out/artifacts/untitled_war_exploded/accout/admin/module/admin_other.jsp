@@ -79,14 +79,11 @@
         <div class="panel-body">
             <h3 align="center">首页内容编辑器</h3>
 
-            <div class="col-lg-10 popover-content " >
+            <div class="col-lg-10 popover-content ">
 
                 <textarea name="editor1" id="editorText" rows="10" cols="80"></textarea>
 
                 <button type="button" id="btn" value="提交"></button>
-
-
-
 
 
             </div>
@@ -102,18 +99,17 @@
 <script>
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
-    CKEDITOR.replace( 'editorText' );
-
+    CKEDITOR.replace('editorText');
 
 
     var btn = document.getElementById("btn");
 
-    btn.onclick = function (){
+    btn.onclick = function () {
         CKEDITOR.appendTo('editorText');
         // CKEDITOR.instances.editorText.updateElement();
         var data1 = CKEDITOR.instances.editorText.getData();
 
-        alert(data1)
+        alert(data1);
 
     }
 
@@ -121,9 +117,10 @@
 </script>
 
 
-
 <script src="../../../js/ajax.js"></script>
-<script type="text/javascript">function is_exit() {document.getElementById("formid").submit();}</script>
+<script type="text/javascript">function is_exit() {
+    document.getElementById("formid").submit();
+}</script>
 
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 

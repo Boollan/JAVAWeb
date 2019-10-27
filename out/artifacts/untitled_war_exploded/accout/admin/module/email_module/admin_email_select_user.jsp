@@ -27,7 +27,8 @@
     <link href="/bootstrap-3.3.7-dist/css/jumbotron-narrow.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -51,14 +52,15 @@
                 <li role="presentation"><a href="/accout/admin/module/admin_other.jsp">其他</a></li>
 
                 <li role="presentation"><a href="/accout/index.jsp">用户</a></li>
-                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li></ul>
+                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li>
+            </ul>
             <form id="formid" name="formid" action="/exit" method="post"></form>
         </nav>
         <%
             Object userName = session.getAttribute("UserName");
-            if(userName!=null){
-                out.print("<h3 class=\"text-muted\">"+"管理员:"+userName+"</h3>");
-            }else {
+            if (userName != null) {
+                out.print("<h3 class=\"text-muted\">" + "管理员:" + userName + "</h3>");
+            } else {
                 response.sendRedirect("/");
             }
         %>
@@ -79,38 +81,40 @@
                 <div class="col-lg-10 popover-content " style="margin-left: 7%">
 
                     <br>
-                    <div class="input-group"  >
+                    <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">账号:</span>
-                        <input type="text" id="email_accout" class="form-control" placeholder="要查找的用户名"   aria-describedby="basic-addon1" >
+                        <input type="text" id="email_accout" class="form-control" placeholder="要查找的用户名"
+                               aria-describedby="basic-addon1">
                     </div>
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon2">邮箱:</span>
-                        <input type="password" id="email-mail" class="form-control" placeholder="..." aria-describedby="basic-addon1" >
+                        <input type="password" id="email-mail" class="form-control" placeholder="..."
+                               aria-describedby="basic-addon1">
                     </div>
                     <br>
-                    <button type="button" id="email-btn" class="btn btn-default" style="margin-left: 40%; color: #337AB7; width: 125px;height: 50px">确认强制更改</button>
+                    <button type="button" id="email-btn" class="btn btn-default"
+                            style="margin-left: 40%; color: #337AB7; width: 125px;height: 50px">确认强制更改
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
 
-
     <footer class="footer">
         <p>&copy; 2019 Company, Inc.</p>
     </footer>
 </div> <!-- /container -->
-    <script src="../../../../js/ajax.js"></script>
+<script src="../../../../js/ajax.js"></script>
 <script type="text/javascript">
-
 
 
     window.onload = function () {
 
         var email_btn = document.getElementById("");
 
-        email_btn.onclick=function () {
+        email_btn.onclick = function () {
 
             /**
              * Ajax四步操作，得到服务器响应
@@ -126,11 +130,11 @@
              * 指定请求URL
              * 指定是否为异步请求
              */
-            xmlhttp.open("POST","/Accout/Admin/EmailData",true);
+            xmlhttp.open("POST", "/Accout/Admin/EmailData", true);
             /**
              * 设置请求头
              */
-            xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             /**
              * 发送请求
              */
@@ -141,15 +145,17 @@
             xmlhttp.onreadystatechange = function () {
 
                 //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200 ){
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                     var text = xmlhttp.responseText;
 
-                    var json = eval("("+text+")");//将字符串转换为JSON对象
+                    var json = eval("(" + text + ")");//将字符串转换为JSON对象
 
 
-
-                    if (json.json_permissions > 0 && json.json_permissions <4){}else{top.location='/index.jsp';}
+                    if (json.json_permissions > 0 && json.json_permissions < 4) {
+                    } else {
+                        top.location = '/index.jsp';
+                    }
 
                 }
             }
@@ -160,7 +166,9 @@
 </script>
 
 
-<script type="text/javascript">function is_exit(){document.getElementById("formid").submit(); }</script>
+<script type="text/javascript">function is_exit() {
+    document.getElementById("formid").submit();
+}</script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>

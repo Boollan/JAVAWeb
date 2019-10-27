@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebFilter(filterName = "AdminFilter",urlPatterns = "/accout/admin/*")
+@WebFilter(filterName = "AdminFilter", urlPatterns = "/accout/admin/*")
 public class AdminFilter implements Filter {
     public void destroy() {
     }
@@ -26,15 +26,14 @@ public class AdminFilter implements Filter {
         Connection connection = sqLdatabase.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
 
 
-
         String username = land.GetUserName(request); //判断用户是否登录
-        if (username != null && username != ""){
-             if (land.GetRootUser(username, connection)>2){
-                 chain.doFilter(req, resp);
-             }else {
-                 response.sendRedirect("/");
-             }
-        }else {
+        if (username != null && username != "") {
+            if (land.GetRootUser(username, connection) > 2) {
+                chain.doFilter(req, resp);
+            } else {
+                response.sendRedirect("/");
+            }
+        } else {
             response.sendRedirect("/");
         }
 

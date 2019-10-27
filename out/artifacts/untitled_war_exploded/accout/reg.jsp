@@ -29,7 +29,8 @@
     <link href="./accout/signin.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="../bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -50,7 +51,8 @@
         <br>
         <div class="alert alert-success" id="errorText" role="alert" style="visibility: hidden">您输入的用户名已存在</div>
         <label for="inputUsername" class="sr-only">账号:</label>
-        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required autofocus>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required
+               autofocus>
         <br>
         <label for="inputEmail" class="sr-only">邮箱:</label>
         <input type="email" id="inputEmail" name="email" class="form-control" placeholder="请输入邮箱" required autofocus>
@@ -60,23 +62,27 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
         <p></p>
-        <a href="/accout/login.jsp"><button class="btn btn-lg btn-primary btn-block" type="button">登录界面</button></a>
+        <a href="/accout/login.jsp">
+            <button class="btn btn-lg btn-primary btn-block" type="button">登录界面</button>
+        </a>
         <p></p>
-        <a href="/"><button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button></a>
+        <a href="/">
+            <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
+        </a>
     </form>
 
 </div> <!-- /container -->
 
-    <script src="../js/ajax.js"></script>
+<script src="../js/ajax.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
     window.onload = function () {
         var elementById1 = document.getElementById("inputUsername");
 
         elementById1.onblur = function () {
 
-            if (elementById1.value!=""){
+            if (elementById1.value != "") {
 
                 var xmlhttp = creatXMLHttpRequest();
                 /**
@@ -85,41 +91,40 @@
                  * 指定请求URL
                  * 指定是否为异步请求
                  */
-                xmlhttp.open("POST","/Accout/Validation",true);
+                xmlhttp.open("POST", "/Accout/Validation", true);
                 /**
                  * 设置请求头
                  */
-                xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 /**
                  * 发送请求
                  */
-                xmlhttp.send("inputUsernameValue="+elementById1.value+"");//POST请求体
+                xmlhttp.send("inputUsernameValue=" + elementById1.value + "");//POST请求体
                 /**
                  * 给异步对象的onraedystatechange事件注册监听器
                  */
                 xmlhttp.onreadystatechange = function () {
 
                     //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200 ){
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         var elementById2 = document.getElementById("errorText");
 
                         var is_acccif = xmlhttp.responseText;
 
-                        if (is_acccif==1){
-                            elementById2.style.visibility="visible";
-                        }else {
-                            elementById2.style.visibility="hidden";
+                        if (is_acccif == 1) {
+                            elementById2.style.visibility = "visible";
+                        } else {
+                            elementById2.style.visibility = "hidden";
                         }
 
                     }
                 }
 
-            }else {
-                document.getElementById("errorText").style.visibility="hidden";
+            } else {
+                document.getElementById("errorText").style.visibility = "hidden";
             }
         }
     }
-
 
 
 </script>

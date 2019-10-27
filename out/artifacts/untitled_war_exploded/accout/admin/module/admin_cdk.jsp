@@ -111,7 +111,8 @@
                 <br>
                 <br>
                 <h6 style="color: red;">每行一张卡密</h6>
-                <textarea class="form-control"  id="cdk_text" style="font-weight: bolder;font-size: 12px;" rows="12" ></textarea>
+                <textarea class="form-control" id="cdk_text" style="font-weight: bolder;font-size: 12px;"
+                          rows="12"></textarea>
             </div>
         </div>
     </div>
@@ -121,7 +122,7 @@
         <p>&copy; 2019 Company, Inc.</p>
     </footer>
 </div> <!-- /container -->
-    <script src="../../../js/ajax.js"></script>
+<script src="../../../js/ajax.js"></script>
 <script type="text/javascript">
 
 
@@ -141,7 +142,7 @@
 
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            xmlhttp.send("num="+cdk_num.value+"&moey="+cdk_moey.value+"&datetime="+cdk_datetime.value+"");//POST请求体
+            xmlhttp.send("num=" + cdk_num.value + "&moey=" + cdk_moey.value + "&datetime=" + cdk_datetime.value + "");//POST请求体
 
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
@@ -149,13 +150,13 @@
 
                 var json = eval("(" + text + ")");//将字符串转换为JSON对象
 
-                var str =' ';
+                var str = ' ';
 
-                for (var i=0 in json) {
+                for (var i = 0 in json) {
                     // '&#xd'
-                    str+=json[i].cdk+' &#xd ';
+                    str += json[i].cdk + ' &#xd ';
                 }
-                    cdk_text.innerHTML=str;
+                cdk_text.innerHTML = str;
                 alert("卡密成功生成！");
 
             }

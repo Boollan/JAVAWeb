@@ -27,7 +27,8 @@
     <link href="/bootstrap-3.3.7-dist/css/jumbotron-narrow.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="/bootstrap-3.3.7-dist/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/bootstrap-3.3.7-dist/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -51,14 +52,15 @@
                 <li role="presentation"><a href="/accout/admin/module/admin_other.jsp">其他</a></li>
 
                 <li role="presentation"><a href="/accout/index.jsp">用户</a></li>
-                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li></ul>
+                <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li>
+            </ul>
             <form id="formid" name="formid" action="/exit" method="post"></form>
         </nav>
         <%
             Object userName = session.getAttribute("UserName");
-            if(userName!=null){
-                out.print("<h3 class=\"text-muted\">"+"管理员:"+userName+"</h3>");
-            }else {
+            if (userName != null) {
+                out.print("<h3 class=\"text-muted\">" + "管理员:" + userName + "</h3>");
+            } else {
                 response.sendRedirect("/");
             }
         %>
@@ -67,21 +69,25 @@
         <div class="panel-heading">修改用户的密码</div>
         <div class="panel-body">
 
-            <div class="col-lg-10 popover-content "  style="margin-left: 7%">
+            <div class="col-lg-10 popover-content " style="margin-left: 7%">
                 <p style="color: red;">PS;管理员请不要随意修改用户的密码！</p>
                 <p>PS:除非用户需要帮助！</p>
                 <br id="messbody">
-                <div class="input-group"  >
+                <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">账号:</span>
-                    <input type="text" id="Admin_UserName" class="form-control" placeholder="要修改的用户名"   aria-describedby="basic-addon1" >
+                    <input type="text" id="Admin_UserName" class="form-control" placeholder="要修改的用户名"
+                           aria-describedby="basic-addon1">
                 </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon2">密码:</span>
-                    <input type="password" id="Admin_UserPwd" class="form-control" placeholder="请输入新的密码" aria-describedby="basic-addon1" >
+                    <input type="password" id="Admin_UserPwd" class="form-control" placeholder="请输入新的密码"
+                           aria-describedby="basic-addon1">
                 </div>
                 <br>
-                <button type="button" id="admin_passowrd-btn" class="btn btn-default" style="margin-left: 40%; color: #337AB7; width: 125px;height: 50px">确认强制更改</button>
+                <button type="button" id="admin_passowrd-btn" class="btn btn-default"
+                        style="margin-left: 40%; color: #337AB7; width: 125px;height: 50px">确认强制更改
+                </button>
             </div>
         </div>
     </div>
@@ -90,9 +96,8 @@
         <p>&copy; 2019 Company, Inc.</p>
     </footer>
 </div> <!-- /container -->
-    <script src="../../../js/ajax.js"></script>
+<script src="../../../js/ajax.js"></script>
 <script type="text/javascript">
-
 
 
     var admin_passowrd_btn = document.getElementById("admin_passowrd-btn");
@@ -114,38 +119,38 @@
              * 指定请求URL
              * 指定是否为异步请求
              */
-            xmlhttp.open("POST","/Accout/Admin/APWServlet",true);
+            xmlhttp.open("POST", "/Accout/Admin/APWServlet", true);
             /**
              * 设置请求头
              */
-            xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             var UserName = document.getElementById("Admin_UserName");
             var UserPwd = document.getElementById("Admin_UserPwd");
 
-            xmlhttp.send("admin_username=<%=session.getAttribute("UserName")%>&permissions=<%=session.getAttribute("permissions")%>&username="+UserName.value+"&userpwd="+UserPwd.value+"");//POST请求体
+            xmlhttp.send("admin_username=<%=session.getAttribute("UserName")%>&permissions=<%=session.getAttribute("permissions")%>&username=" + UserName.value + "&userpwd=" + UserPwd.value + "");//POST请求体
             /**
              * 给异步对象的onraedystatechange事件注册监听器
              */
             xmlhttp.onreadystatechange = function () {
 
                 //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200 ){
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                     var text = xmlhttp.responseText;
 
-                    var json = eval("("+text+")");//将字符串转换为JSON对象
+                    var json = eval("(" + text + ")");//将字符串转换为JSON对象
 
-                    if (json.return){
+                    if (json.return) {
 
                         //清空Input值
-                        UserName.value="";
-                        UserPwd.value="";
+                        UserName.value = "";
+                        UserPwd.value = "";
                         //messbody
                         document.getElementById("messbody").insertAdjacentHTML('afterend', '<div class="alert alert-success" id="messText_email" role="alert" style="visibility: visible">密码更改成功!</div>');
                         show_good();
-                    }else {
-                        UserName.value="";
-                        UserPwd.value="";
+                    } else {
+                        UserName.value = "";
+                        UserPwd.value = "";
                         document.getElementById("messbody").insertAdjacentHTML('afterend', '<div class="alert alert-success" id="messText_email" role="alert" style="visibility: visible">密码更改失败!</div>');
                         show_good();
 
@@ -153,7 +158,7 @@
 
 
                     //用于UI界面的显示 bate
-                    function show_good () {
+                    function show_good() {
                         setTimeout(function () {
                             var idObject = document.getElementById('messText_email');
                             idObject.parentNode.removeChild(idObject);
@@ -168,7 +173,9 @@
 </script>
 
 
-<script type="text/javascript">function is_exit(){document.getElementById("formid").submit(); }</script>
+<script type="text/javascript">function is_exit() {
+    document.getElementById("formid").submit();
+}</script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>

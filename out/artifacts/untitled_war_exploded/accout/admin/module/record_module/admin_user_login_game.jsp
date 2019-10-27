@@ -110,7 +110,7 @@
 
 
                 <!-- Table -->
-                <table class="table" id="table_list" >
+                <table class="table" id="table_list">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -184,13 +184,13 @@
 
                 var text = xmlhttp.responseText;
                 var result = eval("(" + text + ")");
-                alert("返回数据为:"+text)
+                alert("返回数据为:" + text)
                 var wrap = document.getElementById("wrap");//获取表
 
 
                 for (var i in result) {
 
-                    wrap.insertAdjacentHTML('afterend', "<tr><th scope=\"row\">"+(result.length-i)+"</th><td>"+result[i].username+"</td><td>"+result[i].addip+"</td><td>"+result[i].datetime+"</td><td>"+result[i].client+"</td></tr>");
+                    wrap.insertAdjacentHTML('afterend', "<tr><th scope=\"row\">" + (result.length - i) + "</th><td>" + result[i].username + "</td><td>" + result[i].addip + "</td><td>" + result[i].datetime + "</td><td>" + result[i].client + "</td></tr>");
 
                 }
             }
