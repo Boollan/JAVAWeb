@@ -85,8 +85,8 @@ public class encryption {
 
 
     //Base64 自定义加密函数处理
-    private static int SaltValueNum = 0; //加密次数
-    private static String GetSaltvalue="null";//盐值
+    private static int SaltValueNum = 6; //加密次数
+    private static String GetSaltvalue="Boollan";//盐值
 
 
     /**

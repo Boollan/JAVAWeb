@@ -1,8 +1,11 @@
 package com.module;
 
+import com.user.sql.SQLConfig;
+import com.user.sql.data.SQLdatabase;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -11,7 +14,7 @@ public class traverse {
 
     //遍历json
 
-
+    //使用数据结果据变成JSON数据
     public String resultSetToJson(ResultSet rs)
     {
         try {
@@ -41,5 +44,13 @@ public class traverse {
             e.printStackTrace();
         }
         return null;
+    }
+    //获取首页信息数据的方法
+    public JSONObject GetHomeShowInfo(){
+
+        SQLdatabase sqLdatabase = new SQLdatabase();
+        Connection connection = sqLdatabase.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
+
+        return sqLdatabase.Get_Home_Show_Text(connection);
     }
 }

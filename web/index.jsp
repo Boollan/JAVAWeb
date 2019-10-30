@@ -5,7 +5,8 @@
   Time: 10:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.module.traverse" %>
+<%@ page import="org.json.simple.JSONObject" %>
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -52,6 +53,8 @@
                             <li><a href="https://blogs.boollan.pro">依梦汉化组</a></li>
 
                             <%
+                                traverse traverse = new traverse();
+                                JSONObject jsonObject = traverse.GetHomeShowInfo();
                                 Object userName = session.getAttribute("UserName");
                                 if (userName != null) {
                                     out.print("<li><a href=\"accout/index.jsp\">" + "账号:" + userName + "</a></li>");
@@ -73,13 +76,13 @@
                     <!-- 轮播（Carousel）项目 -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="" id="imge_1" alt="First slide">
+                            <img src="<%out.print(jsonObject.get("imge_1"));%>" alt="First slide">
                         </div>
                         <div class="item">
-                            <img src="" id="imge_2" alt="Second slide">
+                            <img src="<%out.print(jsonObject.get("imge_2"));%>" alt="Second slide">
                         </div>
                         <div class="item">
-                            <img src="" id="imge_3" alt="Third slide">
+                            <img src="<%out.print(jsonObject.get("imge_3"));%>" alt="Third slide">
                         </div>
                     </div>
                     <!-- 轮播（Carousel）导航 -->
@@ -93,17 +96,11 @@
                     </a>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading" style="color: #2a2730;"><h3 id="Title_text"></h3></div>
+                    <div class="panel-heading" style="color: #2a2730;"><h3 id="Title_text">
+                        <%out.print(jsonObject.get("homeTite"));%>
+                    </h3></div>
                     <div class="panel-body" id="text" style="color:#2a2730;" align="left">
-                        <%--                        <p>1.汉化人员：Boollan |如需联合汉化请联系我 mail：golezaoz@gmail.com  | 原版优化：NFL BL游戏发布组自制兼容版</p>--%>
-                        <%--                        <p>2.此版本暂时汉化中</p>--%>
-                        <%--                        <p>=============</p>--%>
-                        <%--                        <p>3.汉化版本：0.1.0版本</p>--%>
-                        <%--                        <p>4.游戏必须放置在纯英文或数字路径 否则报错</p>--%>
-                        <%--                        <p>5.如游戏中遇到报错 请保持当前进度存档重启游戏即可。</p>--%>
-                        <%--                        <p>6.如翻译文本出错，可能会在下个版本修复（但汉化可能不够及时）</p>--%>
-                        <%--                        <p>======================================</p>--%>
-                        <%--                        <p>开场基本汉化完毕。</p>--%>
+                        <%out.print(jsonObject.get("HomeText"));%>
                     </div>
                 </div>
             </div>
@@ -120,45 +117,6 @@
     </div>
 
 </div>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-
-<script type="text/javascript">
-
-    window.onload = function () {
-
-        var Title_text = document.getElementById("Title_text");
-        var text_text = document.getElementById("text");
-        var imge_1 = document.getElementById("imge_1");
-        var imge_2 = document.getElementById("imge_2");
-        var imge_3 = document.getElementById("imge_3");
-
-
-        var xmlhttp = creatXMLHttpRequest();
-
-        xmlhttp.open("GET", "/HomeShowText", false);
-
-        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xmlhttp.send(null);//POST请求体
-
-        //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
-            var text = xmlhttp.responseText;
-
-            var json = eval("(" + text + ")");//将字符串转换为JSON对象
-
-            Title_text.innerHTML = json.homeTite;
-            text_text.innerHTML = json.HomeText;
-            imge_1.src = json.imge_1;
-            imge_2.src = json.imge_2;
-            imge_3.src = json.imge_3;
-
-        }
-    }
-</script>
 
 <script src="js/ajax.js"></script>
 

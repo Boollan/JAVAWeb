@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-//写入方法在Admain文件夹中Servlet
+//写入方法在Admain文件夹中Servlet 对外公布的任何人都可以读取
 @WebServlet(name = "HomeShowTextServlet",urlPatterns = "/HomeShowText")
 public class HomeShowTextServlet extends HttpServlet {
 

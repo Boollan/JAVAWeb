@@ -5,6 +5,8 @@ import com.Imodule.Ilogin_validation;
 public class login_validation implements Ilogin_validation {
 
     //继承接口 Ilogin_validation
+
+    //登录格式验证
     @Override
     public boolean login_validation(String UserName_Validation, String Password_Validation) {
         if (UserName_Validation.trim() != null && Password_Validation.trim()!=null){
@@ -20,7 +22,7 @@ public class login_validation implements Ilogin_validation {
         }
         return false;
     }
-
+    //用户注册格式验证
     @Override
     public boolean reg_validation(String Email, String UserName, String Password) {
         return false;

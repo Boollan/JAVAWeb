@@ -15,7 +15,7 @@ public class RootFilter implements Filter {
     public void destroy() {
 
     }
-
+    //判断是否登录
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
 

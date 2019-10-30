@@ -16,6 +16,7 @@ public class AdminFilter implements Filter {
     public void destroy() {
     }
 
+    //管理员权限的过滤器
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 
         HttpServletRequest request = (HttpServletRequest) req;

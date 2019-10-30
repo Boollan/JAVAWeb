@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class SendEmailRecord implements ISendEmailRecord {
 
+    //将生成的伪随机数发送到Mysql数据库保存进行用户的验证
     @Override
     public boolean SendRecord(String Email, String Code, Date tiem) {
 
@@ -34,7 +35,7 @@ public class SendEmailRecord implements ISendEmailRecord {
             return false;
         }
     }
-
+    //用于发送Htlm模板验证码
     @Override
     public void SendEmailRecord(String Email, String code, Date tiem) throws Exception {
 
@@ -230,7 +231,7 @@ public class SendEmailRecord implements ISendEmailRecord {
 
     }
 
-
+    //用于用户验证
     public boolean EmailCode(String UserName, String EmailoLD,String EmailNew,String Code){
         try {
             SQLdatabase sqLdatabase = new SQLdatabase();

@@ -11,6 +11,7 @@ import java.util.Date;
 
 public class SQLdatabase implements interfaceSqldata {
 
+    //MySQL连接
     @Override
     public Connection Mysql_SQL(String SQL, String SQL_User, String Passowrd) {
         try {
@@ -23,7 +24,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
-
+    //用户的登录验证
     @Override
     public boolean User_Login_mysql(String User, String Password, Connection mysqlcon) {
         try {
@@ -50,7 +51,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
-
+    //用户注册
     @Override
     public boolean User_reg_mysql(String User, String Password, String Email, Connection mysqlcon) {
 
@@ -79,7 +80,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
-
+    //用户的登录信息
     @Override
     public boolean User_login_record_mysql(String User, String IP, String client, java.util.Date datetime, Connection mysqlcon) {
         try {
@@ -97,7 +98,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
     }
 
-
+    //更新密码
     public boolean User_UpdataPwd_mysql(String User, String passowrd_old, String passowrd_new, Connection mysqlcon) {
         try {
             passowrd_old = encryption.StringInMd5(passowrd_old.trim());
@@ -126,7 +127,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
-
+    //查询用户的信息
     @Override
     public JSONObject GetinfoUser(String UserName, Connection mysqlcon) {
         try {
@@ -152,7 +153,7 @@ public class SQLdatabase implements interfaceSqldata {
             return null;
         }
     }
-
+    //利用邮箱查询用户信息
     @Override
     public JSONObject GetinfoEmail(String Email, Connection mysqlcon) {
         try {
@@ -174,7 +175,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
-
+    //判断是否是管理员
     @Override
     public boolean Admin_is(String Admin, Connection mysqlcon) {
 
@@ -195,7 +196,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
-
+    //使用管理员权限更改其他用户的密码
     @Override
     public boolean Admin_Updata_Passwrod(String Admin, String UserName, String UserPassowrd, Connection mysqlcon) {
 
@@ -233,7 +234,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
-
+    //使用管理员权限更改其他用户的邮箱
     @Override
     public boolean Admin_Updata_Email(String Admin, String UserName, String UserNweEmail, Connection mysqlcon) {
 
@@ -252,7 +253,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
-
+    //使用管理员权限查询所有记录(登录记录)
     @Override
     public ResultSet Admin_Select_Record_Resultset(String UserName, java.util.Date StartTiem, java.util.Date EndTime, String platform, Connection mysqlcon) {
 
@@ -361,7 +362,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
-
+    //使用管理员权限生成CDK卡密
     public boolean Admin_inset_cdk(String cdk, String money, Date overduetime, Connection mysqlcon) {
 
         try {
@@ -379,7 +380,7 @@ public class SQLdatabase implements interfaceSqldata {
             return false;
         }
     }
-
+    //用户提交卡密
     public boolean Acoout_send_Cdk(String username, String key, Connection mysqlcon) {
 
         try {
@@ -425,7 +426,6 @@ public class SQLdatabase implements interfaceSqldata {
 
     }
 
-
     //读取首页内容
     public JSONObject Get_Home_Show_Text(Connection mysqlcon) {
 
@@ -459,7 +459,7 @@ public class SQLdatabase implements interfaceSqldata {
 
     }
 
-    //写入首页内容
+    //以管理员身份写入首页内容
     public boolean Set_Home_Show_Text(String Title, String Text, String imge_1, String imge_2, String imge_3, Connection mysqlcon) {
 
         try {

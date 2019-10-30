@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class SetCookie {
 
+    //设置Cookie Keep=true 7天免登录
     public Cookie SetUserCookie(String CookieName,String CookieValue, boolean Keep ){
         Cookie cookie = new Cookie(CookieName,CookieValue);
         if (Keep==true){
@@ -21,6 +22,7 @@ public class SetCookie {
         return cookie;
     }
 
+    //获取客户端的Cookie
     public JSONObject GetUserCookie(HttpServletRequest request, HttpServletResponse response){
 
         response.setContentType("text/html;charset=utf-8");
@@ -39,7 +41,7 @@ public class SetCookie {
         }
         return null;
     }
-
+    //删除Cookie
     public Cookie DeleUserCookie(String DelCookieName){
         Cookie cookie = new Cookie(DelCookieName,null);
         cookie.setMaxAge(0);

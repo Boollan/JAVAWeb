@@ -11,30 +11,27 @@ import java.sql.Connection;
 public class Land {
 
     //获取当前用户名
-    public String GetUserName(HttpServletRequest request){
+    public String GetUserName(HttpServletRequest request) {
         return (String) request.getSession().getAttribute("UserName");
     }
 
     //判断权限等级
-    public int GetRootUser(String UserName, Connection sqlcon){
+    public int GetRootUser(String UserName, Connection sqlcon) {
         SQLdatabase sqldate = new SQLdatabase();
         JSONObject json = sqldate.GetinfoUser(UserName, sqlcon);
-        return Integer.parseInt((String)json.get("permissions"));
+        return Integer.parseInt((String) json.get("permissions"));
     }
 
     //过滤器排除登录页面
-    public boolean Urlexclude(String Url){
+    public boolean Urlexclude(String Url) {
 
-        if (FilterExclude.str1.equals(Url)==true||FilterExclude.str2.equals(Url)==true){
-            return true;
+        for (int i = 0; i < FilterExclude.StrUri.length; i++) {
+            if (FilterExclude.StrUri[i].equals(Url)==true){
+                return true;
+            }
         }
         return false;
     }
-
-
-
-
-
 
 
 }
