@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,46 +21,62 @@ import java.sql.Connection;
 public class Reg_Mysql_Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String requestUsername = request.getParameter("username");
+        String requestUsername = request.getParameter("username").trim();
 
-        String requestPassword = request.getParameter("password");
+        String requestPassword = request.getParameter("password").trim();
 
-        String requestEmail = request.getParameter("email");
+        String requestEmail = request.getParameter("email").trim();
+
+        /**
+         * 无感验证接收
+         */
+        String token = request.getParameter("token");
+
+//        System.out.println("账号:"+requestUsername+"\n密码:"+requestPassword+"\n邮箱:"+requestEmail+"\ntoken："+token);
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        response.setHeader("content-type","text/html;charset=UTF-8");
 
         Ilogin_validation ilogin_validation = new login_validation();
 
         boolean reten = ilogin_validation.login_validation(requestUsername, requestPassword);//校验用户名和密码格式
-
+        JSONObject json  = new JSONObject();
         if (reten==true){
 
-            interfaceSqldata SQLDatabase = new SQLdatabase();
+            boolean CoderRtunr = false;
+            try {
+                CoderRtunr = ilogin_validation.ImgeVerification(token);
+                if (CoderRtunr==true){
 
-            Connection connection = SQLDatabase.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
+                    interfaceSqldata SQLDatabase = new SQLdatabase();
 
-            boolean ret_reg_mysql = SQLDatabase.User_reg_mysql(requestUsername, requestPassword,requestEmail, connection);
+                    Connection connection = SQLDatabase.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
 
-            if (ret_reg_mysql==true){
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("text/html;charset=utf-8");
-                response.setHeader("content-type","text/html;charset=UTF-8");
-                response.getWriter().print("恭喜注册成功。正在跳转到登录页面...");
-                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                response.setHeader("refresh","3;url='/accout/login.jsp'");
-            }else {
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("text/html;charset=utf-8");
-                response.setHeader("content-type","text/html;charset=UTF-8");
-                response.getWriter().print("用户名已存在,正在跳转回注册页面...");
-                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                response.setHeader("refresh","3;url='/accout/reg.jsp'");
+                    boolean ret_reg_mysql = SQLDatabase.User_reg_mysql(requestUsername, requestPassword,requestEmail, connection);
+
+                    if (ret_reg_mysql==true){
+                        json.put("key",true);
+                        json.put("message","恭喜注册成功.");
+                        response.getWriter().println(json);
+                    }else {
+                        json.put("key",false);
+                        json.put("message","用户名已存在.");
+                        response.getWriter().println(json);
+                    }
+                }else {
+                    json.put("key",false);
+                    json.put("message","验证码错误！");
+                    response.getWriter().println(json);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
         }else {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=utf-8");
-            response.setHeader("content-type","text/html;charset=UTF-8");
-            response.getWriter().print("账号或密码格式不正确");
-
+            json.put("key",false);
+            json.put("message","账号或密码格式不正确.");
+            response.getWriter().println(json);
         }
     }
 

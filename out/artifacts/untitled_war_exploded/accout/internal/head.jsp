@@ -48,7 +48,17 @@
                 <li role="presentation"><a href="/accout/module/Change_password.jsp">密码更改</a></li>
                 <li role="presentation"><a href="/accout/module/Change_email.jsp">邮箱更改</a></li>
                 <li role="presentation"><a href="/accout/module/Change_money.jsp">捐助</a></li>
-                <li role="presentation"><a href="/accout/admin/index.jsp">后台</a></li>
+                <%
+                    try {
+                        String str = (String) request.getSession().getAttribute("permissions");
+                        if (str.equals("3")){
+                            out.print("<li role=\"presentation\"><a href=\"/accout/admin/index.jsp\">后台</a></li>");
+                        }
+                    }catch (Exception e){
+                        System.out.println("错误:"+e.getMessage());
+                    }
+
+                %>
                 <li role="presentation"><a href="javascript:;" onclick="is_exit()">退出</a></li>
             </ul>
             <form id="formid" name="formid" action="/exit" method="post"></form>

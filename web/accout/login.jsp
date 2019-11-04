@@ -55,7 +55,7 @@
 
 <div class="container">
 
-    <form class="form-signin" style="margin : 0% 20% 0% 20%;" id="accfrom" method="post" action="/login_mysql">
+        <div style="margin : 0% 20% 0% 20%;">
         <h2 class="form-signin-heading" align="center">账号登录</h2>
         <label for="inputUsername" class="sr-only">Email address</label>
         <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required
@@ -68,7 +68,8 @@
                 <input type="checkbox" id="keep" name="inputKeep" onclick="is_check()" value="0"> 记住账号(7天免登录)
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <div id="demo-popup"></div>
+        <button class="btn btn-lg btn-primary btn-block" id="subt" type="button">登录</button>
         <p></p>
         <a href="/accout/reg.jsp">
             <button class="btn btn-lg btn-primary btn-block" type="button">注册界面</button>
@@ -77,10 +78,14 @@
         <a href="/">
             <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
         </a>
-    </form>
+        </div>
+
 
 
 </div> <!-- /container -->
+
+<script src="../js/ajax.js"></script>
+
 <script type="text/javascript">var chek = document.getElementById("keep");
 chek.value = "0";
 
@@ -91,10 +96,58 @@ function is_check() {
     } else {
         statue.value = "0";
     }
-}</script>
+}
+
+window.onload = function () {
+
+    var inputUsername = document.getElementById("inputUsername");
+    var inputEmail = document.getElementById("inputEmail");
+    var inputPassword = document.getElementById("inputPassword");
+    var statue = document.getElementById("keep");
+
+
+    var demo_4 = _dx.Captcha(document.getElementById('demo-popup'), {
+        appId: 'a693c2483e07d84df8216f513eb1fbb8',
+        style: 'popup',
+        success: function(token) {
+
+            var xmlhttp = creatXMLHttpRequest();
+
+            xmlhttp.open("POST", "/login_mysql", false);
+
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xmlhttp.send("username="+inputUsername.value+"&password="+inputPassword.value+"&token="+token+"&inputKeep="+statue.value+"");//POST请求体
+
+            //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var textCode = xmlhttp.responseText;
+                var json = eval("(" + textCode + ")");
+                if (json.key==true){
+                    window.location.href="/";
+                } else {
+                    alert("提示:"+json.message);
+                    location.replace("/accout/login.jsp");
+                }
+
+            }
+
+        }
+    })
+
+    document.getElementById('subt').onclick = function() {
+        demo_4.show()
+    }
+
+}
+
+</script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>
+<%--无感验证JS--%>
+<script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
 </body>
 </html>
 

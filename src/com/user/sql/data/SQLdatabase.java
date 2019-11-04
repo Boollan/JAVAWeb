@@ -5,6 +5,7 @@ import com.user.sql.datainteface.interfaceSqldata;
 import com.user.sql.encryption;
 import org.json.simple.JSONObject;
 
+import javax.sound.midi.Soundbank;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,13 +64,14 @@ public class SQLdatabase implements interfaceSqldata {
             ResultSet resultSet = stm.executeQuery("select * from accout_user where username='" + User + "'");
 
             if (resultSet.next() == false) {
-                int is = stm.executeUpdate("INSERT INTO accout_user(username,password,email)VALUES('" + User + "','" + encryption.StringInMd5(Password) + "','" + Email + "')");
+                int is = stm.executeUpdate("INSERT INTO accout_user(username,password,email,donations,permissions)VALUES('" + User + "','" + encryption.StringInMd5(Password) + "','" + Email + "',0,0)");
                 if (is == 1) {
                     return true;
                 } else {
                     return false;
                 }
             } else {
+
                 return false;
             }
 

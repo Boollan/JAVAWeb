@@ -44,9 +44,7 @@
 <body style="background-image: url(../bootstrap-3.3.7-dist/imges/bg_bg.jpg)">
 
 <div class="container">
-
-    <form class="form-signin" style="margin : 0% 20% 0% 20%;" id="accfrom" method="post" action="/reg_mysql">
-
+    <div style="margin : 0% 20% 0% 20%;">
         <h2 class="form-signin-heading" align="center" style="color: white;">注册账号</h2>
         <br>
         <div class="alert alert-success" id="errorText" role="alert" style="visibility: hidden">您输入的用户名已存在</div>
@@ -59,17 +57,21 @@
         <br>
         <label for="inputPassword" class="sr-only">密码:</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required>
+    <div id="demo-popup"></div>
+    <p></p>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
-        <p></p>
-        <a href="/accout/login.jsp">
-            <button class="btn btn-lg btn-primary btn-block" type="button">登录界面</button>
-        </a>
-        <p></p>
-        <a href="/">
-            <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
-        </a>
-    </form>
+    <button class="btn btn-lg btn-primary btn-block" id="subt" type="button">注册</button>
+    <p></p>
+    <a href="/accout/login.jsp">
+        <button class="btn btn-lg btn-primary btn-block" type="button">登录界面</button>
+    </a>
+    <p></p>
+    <a href="/">
+        <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
+    </a>
+    </div>
+
+
 
 </div> <!-- /container -->
 
@@ -78,6 +80,49 @@
 <script type="text/javascript">
 
     window.onload = function () {
+
+        var inputUsername = document.getElementById("inputUsername");
+        var inputEmail = document.getElementById("inputEmail");
+        var inputPassword = document.getElementById("inputPassword");
+
+
+
+        var demo_4 = _dx.Captcha(document.getElementById('demo-popup'), {
+            appId: 'a693c2483e07d84df8216f513eb1fbb8',
+            style: 'popup',
+            success: function(token) {
+
+                var xmlhttp = creatXMLHttpRequest();
+
+                xmlhttp.open("POST", "/reg_mysql", false);
+
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xmlhttp.send("username="+inputUsername.value+"&password="+inputPassword.value+"&email="+inputEmail.value+"&token="+token+"");//POST请求体
+
+                //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    var textCode = xmlhttp.responseText;
+
+                    var json = eval("(" + textCode + ")");
+                    if (json.key==true){
+                        window.location.href="/";
+                    } else {
+                        alert("提示:"+json.message);
+                        location.replace("/accout/reg.jsp");
+                    }
+
+                }
+
+            }
+        })
+
+        document.getElementById('subt').onclick = function() {
+            demo_4.show()
+        }
+
+
         var elementById1 = document.getElementById("inputUsername");
 
         elementById1.onblur = function () {
@@ -131,6 +176,8 @@
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../bootstrap-3.3.7-dist/assets/js/ie10-viewport-bug-workaround.js"></script>
+<%--无感验证JS--%>
+<script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
 </body>
 </html>
 

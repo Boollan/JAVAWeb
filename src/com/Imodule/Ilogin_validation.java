@@ -7,5 +7,5 @@ public interface Ilogin_validation {
     //用户名注册
     boolean reg_validation(String Email,String UserName,String Password);
 
-
+    boolean ImgeVerification(String token)throws Exception;
 }
