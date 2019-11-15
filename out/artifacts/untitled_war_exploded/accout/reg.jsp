@@ -65,11 +65,7 @@
     <a href="/accout/login.jsp">
         <button class="btn btn-lg btn-primary btn-block" type="button">登录界面</button>
     </a>
-    <p></p>
-    <a href="/">
-        <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
-    </a>
-    </div>
+
 
 
 

@@ -7,6 +7,7 @@ import com.user.sql.data.SQLdatabase;
 import com.user.sql.datainteface.interfaceSqldata;
 import org.json.simple.JSONObject;
 
+import javax.print.URIException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.Connection;
 
 @WebServlet(name = "com.Servlet.Reg_Mysql_Servlet",urlPatterns = "/reg_mysql")
@@ -23,7 +25,7 @@ public class Reg_Mysql_Servlet extends HttpServlet {
 
         String requestUsername = request.getParameter("username").trim();
 
-        String requestPassword = request.getParameter("password").trim();
+        String requestPassword = URLEncoder.encode(request.getParameter("password").trim(),"utf-8");
 
         String requestEmail = request.getParameter("email").trim();
 

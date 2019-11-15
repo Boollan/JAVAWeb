@@ -1,6 +1,7 @@
 package com.user.sql.datainteface;
 
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.xml.crypto.Data;
@@ -111,4 +112,8 @@ public interface interfaceSqldata {
     JSONObject Get_Home_Show_Text(Connection mysqlcon);
 
     boolean Set_Home_Show_Text(String Title , String Text, String imge_1,String imge_2,String imge_3,Connection mysqlcon);
+
+    boolean verify_Passwrod(String UserName, String UserPassowrd, Connection mysqlcon);
+
+    JSONArray Get_Sele_cdk(String cdk_name,Connection mysqlcon);
 }

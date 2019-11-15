@@ -15,7 +15,7 @@ public class traverse {
     //遍历json
 
     //使用数据结果据变成JSON数据
-    public String resultSetToJson(ResultSet rs)
+    public JSONArray resultSetToJson(ResultSet rs)
     {
         try {
 
@@ -38,7 +38,7 @@ public class traverse {
                 }
                 array.add(jsonObj);
             }
-            return array.toString();
+            return array;
 
         } catch (SQLException e) {
             e.printStackTrace();

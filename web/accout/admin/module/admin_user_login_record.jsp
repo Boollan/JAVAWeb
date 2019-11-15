@@ -119,7 +119,6 @@
                 var result = eval("(" + text + ")");
 
                 var wrap = document.getElementById("wrap");//获取表
-
                 for (var i in result) {
 
                     wrap.insertAdjacentHTML('afterend', "<tr><th scope=\"row\">" + (result.length - i) + "</th><td>" + result[i].username + "</td><td>" + result[i].addip + "</td><td>" + result[i].datetime + "</td><td>" + result[i].client + "</td></tr>");

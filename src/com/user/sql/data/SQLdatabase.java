@@ -1,11 +1,16 @@
 package com.user.sql.data;
 
 
+import com.module.traverse;
+import com.user.sql.SQLConfig;
 import com.user.sql.datainteface.interfaceSqldata;
 import com.user.sql.encryption;
+import jdk.nashorn.internal.runtime.regexp.joni.constants.Traverse;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.sound.midi.Soundbank;
+import javax.swing.text.rtf.RTFEditorKit;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +30,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
+
     //用户的登录验证
     @Override
     public boolean User_Login_mysql(String User, String Password, Connection mysqlcon) {
@@ -52,6 +58,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
+
     //用户注册
     @Override
     public boolean User_reg_mysql(String User, String Password, String Email, Connection mysqlcon) {
@@ -64,12 +71,18 @@ public class SQLdatabase implements interfaceSqldata {
             ResultSet resultSet = stm.executeQuery("select * from accout_user where username='" + User + "'");
 
             if (resultSet.next() == false) {
-                int is = stm.executeUpdate("INSERT INTO accout_user(username,password,email,donations,permissions)VALUES('" + User + "','" + encryption.StringInMd5(Password) + "','" + Email + "',0,0)");
-                if (is == 1) {
-                    return true;
-                } else {
-                    return false;
+                resultSet.close();
+                ResultSet resultSetE = stm.executeQuery("select * from accout_user where email='" + Email + "'");
+                if (resultSetE.next()==false){
+                    int is = stm.executeUpdate("INSERT INTO accout_user(username,password,email,donations,permissions)VALUES('" + User + "','" + encryption.StringInMd5(Password) + "','" + Email + "',0,0)");
+                    if (is == 1) {
+                        resultSetE.close();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
+                return false;
             } else {
 
                 return false;
@@ -82,6 +95,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
+
     //用户的登录信息
     @Override
     public boolean User_login_record_mysql(String User, String IP, String client, java.util.Date datetime, Connection mysqlcon) {
@@ -129,6 +143,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
+
     //查询用户的信息
     @Override
     public JSONObject GetinfoUser(String UserName, Connection mysqlcon) {
@@ -155,28 +170,27 @@ public class SQLdatabase implements interfaceSqldata {
             return null;
         }
     }
+
     //利用邮箱查询用户信息
     @Override
     public JSONObject GetinfoEmail(String Email, Connection mysqlcon) {
         try {
             Statement stm = mysqlcon.createStatement();
-            ResultSet resultSet = stm.executeQuery("select * from accout_user where username='" + Email.trim() + "'");
-            int i = 0;
+            ResultSet resultSet = stm.executeQuery("select * from accout_user where email='" + Email.trim() + "'");
             //解决JSON名称冲突问题
             JSONObject json = new JSONObject();
-            while (resultSet.next()) {
-                String str = String.valueOf(i);
-                String temp = "username_" + str;
-                json.put(temp, resultSet.getString("username"));
+            if (resultSet.next()) {
+                json.put("username", resultSet.getString("username"));
+                return json;
             }
-
-            return json;
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
 
     }
+
     //判断是否是管理员
     @Override
     public boolean Admin_is(String Admin, Connection mysqlcon) {
@@ -198,6 +212,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
+
     //使用管理员权限更改其他用户的密码
     @Override
     public boolean Admin_Updata_Passwrod(String Admin, String UserName, String UserPassowrd, Connection mysqlcon) {
@@ -236,6 +251,23 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
+    //重置密码 请不要随意使用此方法
+    public boolean verify_Passwrod(String UserName, String UserPassowrd, Connection mysqlcon) {
+
+        try {
+            String md5Passowrd = encryption.StringInMd5(UserPassowrd);
+            Statement stm = mysqlcon.createStatement();
+            int i = stm.executeUpdate("UPDATE accout_user set password='" + md5Passowrd + "' where username='" + UserName + "' ");
+            if (i > 0) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     //使用管理员权限更改其他用户的邮箱
     @Override
     public boolean Admin_Updata_Email(String Admin, String UserName, String UserNweEmail, Connection mysqlcon) {
@@ -255,6 +287,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
         return false;
     }
+
     //使用管理员权限查询所有记录(登录记录)
     @Override
     public ResultSet Admin_Select_Record_Resultset(String UserName, java.util.Date StartTiem, java.util.Date EndTime, String platform, Connection mysqlcon) {
@@ -364,6 +397,7 @@ public class SQLdatabase implements interfaceSqldata {
         }
 
     }
+
     //使用管理员权限生成CDK卡密
     public boolean Admin_inset_cdk(String cdk, String money, Date overduetime, Connection mysqlcon) {
 
@@ -382,33 +416,47 @@ public class SQLdatabase implements interfaceSqldata {
             return false;
         }
     }
+
     //用户提交卡密
     public boolean Acoout_send_Cdk(String username, String key, Connection mysqlcon) {
 
         try {
             Statement stm = mysqlcon.createStatement();
+
             Date date = new Date();
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             String format = sdf.format(date);
-            ResultSet resultSet = stm.executeQuery("select * from accout_cdk where cdk='" + key.trim() + "' and overduetime<'" + format + "' and effective=0");
+
+            ResultSet resultSet = stm.executeQuery("select * from accout_cdk where cdk='" + key + "' and overduetime>'" + format + "' and effective=0");
             if (resultSet.next()) {
+
                 double permissions = resultSet.getDouble("money");
-                ResultSet resultSet_user = stm.executeQuery("select * from accout_user where username='" + username.trim() + "'");
+                ResultSet resultSet_user = stm.executeQuery("select * from accout_user where username='" + username + "'");
                 if (resultSet_user.next()) {
+
                     double donations = (double) resultSet_user.getInt("donations");
+                    int permissions_user = resultSet_user.getInt("permissions");
                     int peace = (int) (donations + permissions);
                     if (peace > 4) {
 
-                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + ",permissions=2 where username='" + username.trim() + "'");
-                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key.trim() + "'");
+                        if (permissions_user<2){
+                            int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + " , permissions=2 where username='" + username + "'");
+                        }
+                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + " where username='" + username + "'");
+                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key + "'");
                         if (i > 0) {
                             return true;
                         } else {
                             return false;
                         }
                     } else {
-                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + ",permissions=2 where username='" + username.trim() + "'");
-                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key.trim() + "'");
+                        if (permissions_user<1){
+                            int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + " , permissions=1 where username='" + username + "'");
+                        }
+                        int i = stm.executeUpdate("UPDATE accout_user set donations=" + peace + " where username='" + username + "'");
+                        stm.executeUpdate("update accout_cdk set effective=1 where cdk='" + key + "'");
                         if (i > 0) {
                             return true;
                         } else {
@@ -422,7 +470,9 @@ public class SQLdatabase implements interfaceSqldata {
                 return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error");
+            System.out.println(e.getMessage());
+
         }
         return false;
 
@@ -469,7 +519,7 @@ public class SQLdatabase implements interfaceSqldata {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = sdf.format(date);
-            int i = stm.executeUpdate("update Home_Show set HomeTite=" + Title + " and HomeText=" + Text + " and imge_1=" + imge_1 + " and imge_2=" + imge_2 + " and imge_3=" + imge_3 + " and updata_time=" + format + " where id=1");
+            int i = stm.executeUpdate("update Home_Show set HomeTite='"+Title+"', HomeText='"+Text+"', imge_1='"+imge_1+"',imge_2='"+imge_2+"',imge_3='"+imge_3+"',updata_time='"+format+"' where id=1");
             if (i > 0) {
                 return true;
             } else {
@@ -481,7 +531,18 @@ public class SQLdatabase implements interfaceSqldata {
         return false;
     }
 
+    public JSONArray Get_Sele_cdk(String cdk_name,Connection mysqlcon){
+        try {
 
+            Statement stm = mysqlcon.createStatement();
+            ResultSet resultSet = stm.executeQuery("select * from accout_cdk where cdk='"+cdk_name+"'");
+            traverse traverse = new traverse();
+            return traverse.resultSetToJson(resultSet);
+        }catch (Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
 }
 
 

@@ -117,7 +117,6 @@
 
                 var text = xmlhttp.responseText;
                 var result = eval("(" + text + ")");
-                alert("返回数据为:" + text)
                 var wrap = document.getElementById("wrap");//获取表
 
 

@@ -9,14 +9,12 @@
             <ul class="nav nav-pills" role="tablist">
                 <li role="presentation" class="active"><a href="#">生成CDK</a></li>
                 <li role="presentation"><a href="/accout/admin/module/cdk_module/admin_cdk_select.jsp">查询CDK</a></li>
-                <li role="presentation"><a href="/accout/admin/module/cdk_module/admin_cdk_dele.jsp">删除CDK</a></li>
             </ul>
         </div>
         <div class="panel-body">
             <div class="col-lg-10 popover-content " style="margin-left: 7%">
-                <h1>没有实装~仅供展示之用</h1>
                 <h3>卡密生成</h3>
-                <p>每次生成卡密最大数量为10张</p>
+                <p>每次生成卡密最大数量为5000张</p>
                 <p>关于过期时间 格式为 yyyy-mm-dd（年-月-日）</p>
                 <br>
                 <div class="input-group">
@@ -69,15 +67,16 @@
 
             var xmlhttp = creatXMLHttpRequest();
 
-            xmlhttp.open("POST", "/Accout/Admin/CDKServlet", false);
+            xmlhttp.open("POST", "/Accout/Admin/SendCdkServlet", false);
 
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            xmlhttp.send("num=" + cdk_num.value + "&moey=" + cdk_moey.value + "&datetime=" + cdk_datetime.value + "");//POST请求体
+            xmlhttp.send("num=" + cdk_num.value + "&moey=" + cdk_moey.value + "&datetime=" + cdk_datetime.value + "&model_int=1");//POST请求体
 
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                 var text = xmlhttp.responseText;
+
 
                 var json = eval("(" + text + ")");//将字符串转换为JSON对象
 

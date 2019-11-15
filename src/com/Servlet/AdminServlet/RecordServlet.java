@@ -48,9 +48,9 @@ public class RecordServlet extends HttpServlet {
 
         ResultSet resultSet = sqLdatabase.Admin_Select_Record_Resultset(Record_UserName, Date_StartTime, Date_EndTime, Record_platform, connection);
         traverse traverse = new traverse();
-        String jsonObject = traverse.resultSetToJson(resultSet);
+        JSONArray jsonObject = traverse.resultSetToJson(resultSet);
 
-        response.getWriter().println(jsonObject);
+        response.getWriter().println(jsonObject.toString());
 
     }
 

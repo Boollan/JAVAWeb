@@ -45,6 +45,7 @@
         <nav>
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="/index.jsp">首页</a></li>
+                <li role="presentation"><a href="/accout/index.jsp">资料</a></li>
                 <li role="presentation"><a href="/accout/module/Change_password.jsp">密码更改</a></li>
                 <li role="presentation"><a href="/accout/module/Change_email.jsp">邮箱更改</a></li>
                 <li role="presentation"><a href="/accout/module/Change_money.jsp">捐助</a></li>

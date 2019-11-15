@@ -245,16 +245,43 @@ public class SendEmailRecord implements ISendEmailRecord {
             if(resultSet.next()){
                 String code = resultSet.getString("code");
                 if (Code.equals(code)==true){
-                    int resultSet_email = stm.executeUpdate("update accout_user set email='"+EmailNew+"' where username='"+UserName+"'");
-                    if (resultSet_email==1){
-                        return true;
+                    ResultSet isemail = stm.executeQuery("select * from accout_user where email='"+EmailNew+"'");
+                    if (isemail.next()==false){
+                        int resultSet_email = stm.executeUpdate("update accout_user set email='"+EmailNew+"' where username='"+UserName+"'");
+                        if (resultSet_email==1){
+                            return true;
+                        }else {
+                            return false;
+                        }
                     }else {
                         return false;
                     }
-
                 }else {
                     return false;
                 }
+            }else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean EmailCode(String Email,String Code){
+        try {
+            SQLdatabase sqLdatabase = new SQLdatabase();
+            Connection connection = sqLdatabase.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
+            //创建SQL 连接
+            Statement stm = connection.createStatement();
+            java.util.Date date = new java.util.Date();
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+
+            ResultSet resultSet = stm.executeQuery("select * from EmailCode where email='"+Email+"' and code='"+Code+"' and effective>'"+timestamp+"'");
+            if(resultSet.next()){
+                return true;
+//                String code = resultSet.getString("code");
             }else {
                 return false;
             }

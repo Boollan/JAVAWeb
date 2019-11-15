@@ -58,11 +58,6 @@ public class SendEmailServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
-            System.out.println(b);
         }
-
-
-
     }
 }

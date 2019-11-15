@@ -16,8 +16,8 @@ import java.sql.Connection;
 @WebServlet(name = "Accout_CDK_Servlet",urlPatterns = "/Accout/CdkSend")
 public class Accout_CDK_Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");//用户
-        String key = request.getParameter("key");//KEY
+        String username = request.getParameter("username").trim();//用户
+        String key = request.getParameter("key").trim();//KEY
 
         boolean b = Cdk_Send(username, key);
         JSONObject json = new JSONObject();
@@ -30,7 +30,8 @@ public class Accout_CDK_Servlet extends HttpServlet {
 
         SQLdatabase sqldata = new SQLdatabase();
         Connection connection = sqldata.Mysql_SQL(SQLConfig.MYSQL_JDBCSQL, SQLConfig.MYSQL_USER, SQLConfig.MYSQL_PASSWORD);
-        boolean b = sqldata.Acoout_send_Cdk(UserName.trim(), Key.trim(), connection);
+
+        boolean b = sqldata.Acoout_send_Cdk(UserName, Key, connection);
         if (b==true){
             return true;
         }else {

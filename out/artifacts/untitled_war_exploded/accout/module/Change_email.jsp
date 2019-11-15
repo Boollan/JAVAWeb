@@ -54,7 +54,10 @@
 
             //加载数据
             window.onload = function () {
+                GetEmail();
+            }
 
+            function GetEmail() {
                 var xmlhttp = creatXMLHttpRequest();
 
                 xmlhttp.open("POST", "/Accout/AccoutMessage", true);
@@ -160,10 +163,12 @@
                             email_mail_code.value = "";
                             email_mail_new.value = "";
                             errorText_email.style.visibility = "visible";
+                            GetEmail();
                         } else {
                             email_mail_code.value = "";
                             email_mail_new.value = "";
-                            errorText_email.style.visibility = "hidden";
+                            alert("提示:邮箱修改失败！");
+                            location.replace("/accout/module/Change_email.jsp");
                         }
 
 
@@ -172,6 +177,10 @@
             }
 
 
+
+
         </script>
+
+
 
  <%@include file="../internal/underlying.jsp"%>

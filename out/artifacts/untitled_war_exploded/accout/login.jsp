@@ -55,7 +55,7 @@
 
 <div class="container">
 
-        <div style="margin : 0% 20% 0% 20%;">
+    <div style="margin : 0% 20% 0% 20%;">
         <h2 class="form-signin-heading" align="center">账号登录</h2>
         <label for="inputUsername" class="sr-only">Email address</label>
         <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入账号" required
@@ -65,7 +65,12 @@
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required>
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="keep" name="inputKeep" onclick="is_check()" value="0"> 记住账号(7天免登录)
+                <div>
+                    <input type="checkbox" id="keep" name="inputKeep" onclick="is_check()" value="0"> 记住账号(7天免登录)&#8195;
+                    <a style="color: #0f0f0f;text-align: right;" href="/accout/Forgotpwd.jsp">
+                        &#8195;<nobr>忘记密码？</nobr>
+                    </a>
+                </div>
             </label>
         </div>
         <div id="demo-popup"></div>
@@ -78,8 +83,7 @@
         <a href="/">
             <button class="btn btn-lg btn-primary btn-block" type="button">网站首页</button>
         </a>
-        </div>
-
+    </div>
 
 
 </div> <!-- /container -->
@@ -109,7 +113,7 @@ window.onload = function () {
     var demo_4 = _dx.Captcha(document.getElementById('demo-popup'), {
         appId: 'a693c2483e07d84df8216f513eb1fbb8',
         style: 'popup',
-        success: function(token) {
+        success: function (token) {
 
             var xmlhttp = creatXMLHttpRequest();
 
@@ -117,17 +121,17 @@ window.onload = function () {
 
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            xmlhttp.send("username="+inputUsername.value+"&password="+inputPassword.value+"&token="+token+"&inputKeep="+statue.value+"");//POST请求体
+            xmlhttp.send("username=" + inputUsername.value + "&password=" + inputPassword.value + "&token=" + token + "&inputKeep=" + statue.value + "");//POST请求体
 
             //双重判断: xmlhttp的状态为4(服务器响应结束) 以及 服务器返回的状态码为200(响应成功)
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                 var textCode = xmlhttp.responseText;
                 var json = eval("(" + textCode + ")");
-                if (json.key==true){
-                    window.location.href="/";
+                if (json.key == true) {
+                    window.location.href = "/";
                 } else {
-                    alert("提示:"+json.message);
+                    alert("提示:" + json.message);
                     location.replace("/accout/login.jsp");
                 }
 
@@ -136,7 +140,7 @@ window.onload = function () {
         }
     })
 
-    document.getElementById('subt').onclick = function() {
+    document.getElementById('subt').onclick = function () {
         demo_4.show()
     }
 
