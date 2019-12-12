@@ -12,9 +12,9 @@ public class SQLConfig {
      * JDBC的配置信息: jdbc:mysql://127.0.0.1:3306/Boollan
      */
 
-    public static String MYSQL_JDBCSQL="jdbc:mysql://mysql.boollan.pro:3306/Boollan";
-    public static String MYSQL_USER="root";
-    public static String MYSQL_PASSWORD="XIAOwei123";
+    public static String MYSQL_JDBCSQL="*******************";
+    public static String MYSQL_USER="*********";
+    public static String MYSQL_PASSWORD="*******";
 
     /**
      * SQLServer
